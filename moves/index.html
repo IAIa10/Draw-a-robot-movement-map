@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>robot move</title>
+    <style>
+        #forward {
+            /* border: 4px solid rgb(8, 11, 197); */
+            display: flex;
+            justify-content: center;
+        }
+        
+        #button {
+            /* border: 4px solid rgb(19, 18, 18); */
+            display: flex;
+            justify-content: center;
+        }
+        
+        #overall {
+            /* border: 4px solid rgb(204, 245, 21); */
+            width: 15%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            margin: 0px 0px 0px 500px;
+        }
+        
+        .part1 {
+            /* border: 4px solid rgb(204, 245, 21); */
+            display: flex;
+            margin: 12px 0px 12px 0px;
+            justify-content: space-between;
+            /* padding: 0px 10px 0px 0px; */
+        }
+        /* canvas {
+            display: flex;
+        } */
+    </style>
+</head>
+
+<body>
+    <div id="overall">
+        <div id="forward">
+            <!-- <form action="forward.php" method="POST"> -->
+            <button onclick="drawf()" value="forward">forward</button>
+            <!-- </form> -->
+        </div>
+        <div class="part1">
+            <div id="left">
+                <!-- <form action="left.php" method="POST"> -->
+                <button value="left" onclick="drawl()">left</button>
+                <!-- </form> -->
+            </div>
+            <div id="stop">
+                <!-- <form action="stop.php" method="POST"> -->
+                <button value="stop">stop</button>
+                <!-- </form> -->
+            </div>
+            <div id="right">
+                <!-- <form action="right.php" method="POST"> -->
+                <button onclick="drawr()" value="right">right</button>
+                <!-- </form> -->
+            </div>
+        </div>
+        <div id="button">
+            <!-- <form  action="backward.php" method="POST"> -->
+
+            <button onclick="drawb()">backward</button>
+            <!-- </form> -->
+        </div>
+    </div>
+    <br><br><canvas id="myCanvas" width="600" height="400" style="border:5px solid rgb(8, 8, 8);">
+Your browser does not support the HTML canvas tag.</canvas>
+    <script>
+        var x = 300; // set default value of x to half of the width
+        var y = 200; // set default value of y to half of the height
+        function drawb() {
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            ctx.moveTo(x, y);
+            y += 5;
+            fetch('backward.php', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        x: x,
+                        y: y,
+                        move: 'backward'
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.log(error));
+            // Draw line using new value of Y
+            ctx.lineTo(x, y);
+            ctx.stroke();
+
+
+        }
+
+        function drawf() {
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            ctx.moveTo(x, y);
+
+            // Decrement value of X and update database
+            y -= 5;
+            fetch('forward.php', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        x: x,
+                        y: y,
+                        move: 'forwarad'
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.log(error));
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+
+        function drawr() {
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            ctx.moveTo(x, y);
+
+            // Decrement value of X and update database
+            x += 15;
+            fetch('right.php', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        x: x,
+                        y: y,
+                        move: 'right'
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.log(error));
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+
+        function drawl() {
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            ctx.moveTo(x, y);
+
+            // Decrement value of X and update database
+            x -= 5;
+            fetch('left.php', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        x: x,
+                        y: y,
+                        move: 'left'
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.log(error));
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+
+        function drawl() {
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            ctx.moveTo(x, y);
+
+            // Decrement value of X and update database
+            x -= 5;
+            fetch('left.php', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        x: x,
+                        y: y,
+                        move: 'left'
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.log(error));
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+    </script>
+
+</body>
+
+</html>
